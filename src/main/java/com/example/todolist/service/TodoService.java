@@ -30,4 +30,17 @@ public class TodoService {
         return todoRepository.findById(id).orElse(null);
     }
 
+    public Todo updateTodo(Integer id, Todo updateTodo){
+        return updateTodoInfo(findTodoById(id), updateTodo);
+    }
+
+    private Todo updateTodoInfo(Todo todoById, Todo updateTodo) {
+        if(updateTodo.isDone() != null){
+            todoById.setDone(updateTodo.isDone());
+        }
+        if(updateTodo.getText() != null){
+            todoById.setText(updateTodo.getText());
+        }
+        return todoRepository.save(todoById);
+    }
 }
