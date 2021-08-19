@@ -65,4 +65,12 @@ public class TodoIntegrationTest {
                         content(todoUpdate))
                 .andExpect(jsonPath("$.text").value("This todo is updated"));
     }
+
+    @Test
+    void should_delete_todo_when_deleteTodo_is_called() throws Exception {
+        final Todo toDeleteTodo = todoRepository.save(new Todo(1,"This todo is for update test", false));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/todos/{id}", toDeleteTodo.getId()))
+                .andExpect(status().isOk());
+    }
 }
