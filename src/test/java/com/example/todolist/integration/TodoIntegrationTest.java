@@ -51,4 +51,18 @@ public class TodoIntegrationTest {
                 .content(todo))
                 .andExpect(jsonPath("$.text").value("This todo is for integration test for add to do"));
     }
+
+    @Test
+    void should_update_todo_when_updateTodo_is_called() throws Exception {
+        final Todo updatedTodo = todoRepository.save(new Todo(1,"This todo is for update test", false));
+        String todoUpdate = "    {\n" +
+                "        \"text\": \"This todo is updated\",\n" +
+                "        \"done\": true\n" +
+                "    }";
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/todos/{id}", updatedTodo.getId())
+                .contentType(MediaType.APPLICATION_JSON).
+                        content(todoUpdate))
+                .andExpect(jsonPath("$.text").value("This todo is updated"));
+    }
 }
