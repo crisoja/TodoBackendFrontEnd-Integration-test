@@ -31,4 +31,9 @@ public class TodoController {
         return todoService.addTodo(todo);
     }
 
+    @GetMapping("/{id}")
+    public Todo findTodoById(@PathVariable Integer id){
+        return todoService.findTodoById(id);
+    }
+
 }

@@ -26,4 +26,8 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
+    public Todo findTodoById(Integer id ){
+        return todoRepository.findById(id).orElse(null);
+    }
+
 }
