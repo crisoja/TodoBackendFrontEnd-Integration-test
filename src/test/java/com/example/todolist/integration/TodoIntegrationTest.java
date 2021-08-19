@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -35,5 +36,19 @@ public class TodoIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].text").value("This todo is for test"))
                 .andExpect(jsonPath("$[1].text").value("This todo is for test again"));
+    }
+
+    @Test
+    void should_add_todo_when_addTodo_is_called() throws Exception {
+        String todo = "    {\n" +
+                "        \"id\": 1,\n" +
+                "        \"text\": \"This todo is for integration test for add to do\",\n" +
+                "        \"done\": true\n" +
+                "    }";
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/todos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(todo))
+                .andExpect(jsonPath("$.text").value("This todo is for integration test for add to do"));
     }
 }
