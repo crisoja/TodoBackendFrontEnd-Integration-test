@@ -1,5 +1,6 @@
 package com.example.todolist.service;
 
+import com.example.todolist.exception.TodoNotFoundException;
 import com.example.todolist.model.Todo;
 import com.example.todolist.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class TodoService {
     }
 
     public Todo findTodoById(Integer id) {
-        return todoRepository.findById(id).orElse(null);
+        return todoRepository.findById(id)
+                .orElseThrow(() -> new TodoNotFoundException("Todo ID not found!"));
     }
 
     public Todo updateTodo(Integer id, Todo updateTodo) {
