@@ -21,7 +21,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public List<Todo> findTodo(){
+    public List<Todo> findTodos(){
         return todoService.findTodos();
     }
 
